@@ -1,0 +1,40 @@
+{
+  "FRIENDSHIP_DICE.SceneControl": "Кубик Дружби",
+
+  "FRIENDSHIP_DICE.PlayerPanel.Title": "Кубик Дружби",
+  "FRIENDSHIP_DICE.PlayerPanel.NoBonds": "Зв'язків ще немає.",
+  "FRIENDSHIP_DICE.PlayerPanel.SelectCharacter": "Оберіть свого персонажа в налаштуваннях користувача",
+  "FRIENDSHIP_DICE.PlayerPanel.Roll": "Кинути",
+  "FRIENDSHIP_DICE.PlayerPanel.Used": "Використано",
+  "FRIENDSHIP_DICE.PlayerPanel.AlreadyUsed": "Ви вже використали кубик дружби до довгого відпочинку.",
+
+  "FRIENDSHIP_DICE.GMPanel.Title": "Дружні зв'язки",
+  "FRIENDSHIP_DICE.GMPanel.AddBond": "Додати дружній зв'язок",
+  "FRIENDSHIP_DICE.GMPanel.Actor1": "Персонаж 1",
+  "FRIENDSHIP_DICE.GMPanel.Actor2": "Персонаж 2",
+  "FRIENDSHIP_DICE.GMPanel.Delete": "Видалити",
+  "FRIENDSHIP_DICE.GMPanel.ResetAll": "Скинути всі використання",
+  "FRIENDSHIP_DICE.GMPanel.ConfirmResetAll": "Скинути використання кубиків дружби для всіх персонажів?",
+  "FRIENDSHIP_DICE.GMPanel.ResetOne": "Скинути",
+  "FRIENDSHIP_DICE.GMPanel.ConfirmResetOne": "Скинути використання кубика дружби для {actor}?",
+  "FRIENDSHIP_DICE.GMPanel.ResetOneDone": "Використання кубика дружби скинуто для {actor}.",
+  "FRIENDSHIP_DICE.GMPanel.NoBonds": "Зв'язків ще не створено.",
+  "FRIENDSHIP_DICE.GMPanel.ConfirmDelete": "Видалити зв'язок між {actor1} та {actor2}?",
+  "FRIENDSHIP_DICE.GMPanel.DuplicateBond": "Зв'язок між цими персонажами вже існує.",
+  "FRIENDSHIP_DICE.GMPanel.SameActor": "Не можна створити зв'язок з тим самим персонажем.",
+  "FRIENDSHIP_DICE.GMPanel.ResetDone": "Усі використання кубиків дружби скинуто.",
+
+  "FRIENDSHIP_DICE.GMPanel.SearchActor": "Пошук персонажа...",
+  "FRIENDSHIP_DICE.GMPanel.FilterBonds": "Фільтр зв'язків...",
+  "FRIENDSHIP_DICE.GMPanel.SessionOnly": "В сесії",
+  "FRIENDSHIP_DICE.PlayerPanel.FilterBonds": "Фільтр...",
+
+  "FRIENDSHIP_DICE.Chat.Flavor": "{actor} використовує кубик дружби з {partner}!",
+
+  "FRIENDSHIP_DICE.Rules.Title": "Правила Кубиків Дружби",
+  "FRIENDSHIP_DICE.Rules.Bond": "Зв'язок поділяється між двома персонажами з формулою кубів, яку встановлює Майстер.",
+  "FRIENDSHIP_DICE.Rules.Usage": "Раз за довгий відпочинок, киньте один з кубиків дружби та додайте результат до будь-якої перевірки.",
+  "FRIENDSHIP_DICE.Rules.Nearby": "Ваш друг, має бути поряд не далі ніж 10 футів від вас.",
+  "FRIENDSHIP_DICE.Rules.Limit": "Після кидка ви не можете використати жодний кубик дружби до довгого відпочинку.",
+  "FRIENDSHIP_DICE.Rules.SendToChat": "Надіслати в чат"
+}

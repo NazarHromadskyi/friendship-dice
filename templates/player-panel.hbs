@@ -1,0 +1,55 @@
+<div class="fd-player-panel">
+  <div class="fd-info-bar">
+    <div class="fd-rules-trigger">
+      <i class="fa-solid fa-circle-info fd-rules-icon"></i>
+      <div class="fd-rules-popup">
+        <div class="fd-rules-title">{{localize "FRIENDSHIP_DICE.Rules.Title"}}</div>
+        <div class="fd-rules-list">
+          <div class="fd-rules-item">{{localize "FRIENDSHIP_DICE.Rules.Bond"}}</div>
+          <div class="fd-rules-item">{{localize "FRIENDSHIP_DICE.Rules.Usage"}}</div>
+          <div class="fd-rules-item">{{localize "FRIENDSHIP_DICE.Rules.Nearby"}}</div>
+          <div class="fd-rules-item">{{localize "FRIENDSHIP_DICE.Rules.Limit"}}</div>
+        </div>
+      </div>
+    </div>
+  </div>
+  {{#if noCharacter}}
+    <div class="fd-empty">
+      <i class="fa-solid fa-user-slash"></i>
+      <p>{{localize "FRIENDSHIP_DICE.PlayerPanel.SelectCharacter"}}</p>
+    </div>
+  {{else if bonds.length}}
+    <div class="fd-bonds-section">
+      {{#if showFilter}}
+      <input type="text" class="fd-filter" placeholder="{{localize 'FRIENDSHIP_DICE.PlayerPanel.FilterBonds'}}">
+      {{/if}}
+      <div class="fd-bonds fd-bonds-scroll">
+        {{#each bonds}}
+        <div class="fd-bond-card{{#if ../used}} fd-used{{/if}}" data-bond-id="{{this.id}}">
+          <img class="fd-avatar" src="{{this.partnerImg}}" alt="" width="44" height="44" loading="lazy">
+          <div class="fd-bond-info">
+            <span class="fd-name">{{this.partnerName}}</span>
+            <span class="fd-formula">{{this.formula}}</span>
+          </div>
+          {{#if ../used}}
+            <span class="fd-badge-used">
+              <i class="fa-solid fa-check"></i>
+              {{localize "FRIENDSHIP_DICE.PlayerPanel.Used"}}
+            </span>
+          {{else}}
+            <button type="button" class="fd-btn-roll" data-action="rollBond" data-bond-id="{{this.id}}">
+              <i class="fa-solid fa-dice-d20"></i>
+              {{localize "FRIENDSHIP_DICE.PlayerPanel.Roll"}}
+            </button>
+          {{/if}}
+        </div>
+        {{/each}}
+      </div>
+    </div>
+  {{else}}
+    <div class="fd-empty">
+      <i class="fa-regular fa-handshake"></i>
+      <p>{{localize "FRIENDSHIP_DICE.PlayerPanel.NoBonds"}}</p>
+    </div>
+  {{/if}}
+</div>

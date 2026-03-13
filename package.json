@@ -1,0 +1,18 @@
+{
+  "name": "friendship-dice",
+  "version": "0.1.0",
+  "private": true,
+  "type": "module",
+  "scripts": {
+    "lint": "eslint .",
+    "lint:fix": "eslint . --fix",
+    "format": "prettier --write 'scripts/**/*.mjs' 'styles/**/*.css' 'templates/**/*.hbs' 'lang/**/*.json'",
+    "format:check": "prettier --check 'scripts/**/*.mjs' 'styles/**/*.css' 'templates/**/*.hbs' 'lang/**/*.json'"
+  },
+  "devDependencies": {
+    "eslint": "^10.0.3",
+    "eslint-config-prettier": "^10.1.8",
+    "globals": "^17.4.0",
+    "prettier": "^3.8.1"
+  }
+}

@@ -1,0 +1,138 @@
+<div class="fd-gm-panel">
+  <div class="fd-info-bar">
+    <div class="fd-rules-trigger">
+      <i class="fa-solid fa-circle-info fd-rules-icon"></i>
+      <div class="fd-rules-popup">
+        <div class="fd-rules-title">{{localize "FRIENDSHIP_DICE.Rules.Title"}}</div>
+        <div class="fd-rules-list">
+          <div class="fd-rules-item">{{localize "FRIENDSHIP_DICE.Rules.Bond"}}</div>
+          <div class="fd-rules-item">{{localize "FRIENDSHIP_DICE.Rules.Usage"}}</div>
+          <div class="fd-rules-item">{{localize "FRIENDSHIP_DICE.Rules.Nearby"}}</div>
+          <div class="fd-rules-item">{{localize "FRIENDSHIP_DICE.Rules.Limit"}}</div>
+        </div>
+        <button type="button" data-action="sendRules" class="fd-btn-send-rules">
+          <i class="fa-solid fa-comment-dots"></i>
+          {{localize "FRIENDSHIP_DICE.Rules.SendToChat"}}
+        </button>
+      </div>
+    </div>
+  </div>
+
+  {{!-- Add Bond --}}
+  <div class="fd-add-section">
+    <div class="fd-add-title">
+      <i class="fa-solid fa-plus-circle"></i>
+      {{localize "FRIENDSHIP_DICE.GMPanel.AddBond"}}
+    </div>
+    <div class="fd-add-actors">
+      <div class="fd-picker" data-target="actorId1">
+        <input type="text" class="fd-picker-input" placeholder="{{localize 'FRIENDSHIP_DICE.GMPanel.Actor1'}}" autocomplete="off">
+        <input type="hidden" name="actorId1" value="">
+        <div class="fd-picker-dropdown">
+          {{#each actors}}
+          <div class="fd-picker-option" data-actor-id="{{this.id}}" data-actor-name="{{this.name}}">
+            <img src="{{this.img}}" width="24" height="24" class="fd-picker-avatar" loading="lazy">
+            <span>{{this.name}}</span>
+          </div>
+          {{/each}}
+        </div>
+      </div>
+      <span class="fd-add-heart"><i class="fa-solid fa-handshake"></i></span>
+      <div class="fd-picker" data-target="actorId2">
+        <input type="text" class="fd-picker-input" placeholder="{{localize 'FRIENDSHIP_DICE.GMPanel.Actor2'}}" autocomplete="off">
+        <input type="hidden" name="actorId2" value="">
+        <div class="fd-picker-dropdown">
+          {{#each actors}}
+          <div class="fd-picker-option" data-actor-id="{{this.id}}" data-actor-name="{{this.name}}">
+            <img src="{{this.img}}" width="24" height="24" class="fd-picker-avatar" loading="lazy">
+            <span>{{this.name}}</span>
+          </div>
+          {{/each}}
+        </div>
+      </div>
+    </div>
+    <div class="fd-add-bottom">
+      <input type="number" name="quantity" value="1" min="1" max="10">
+      <select name="size">
+        {{#each dieSizes}}
+        <option value="{{this.value}}"{{#if this.selected}} selected{{/if}}>{{this.label}}</option>
+        {{/each}}
+      </select>
+      <button type="button" data-action="addBond" class="fd-btn-add">
+        <i class="fa-solid fa-plus"></i>
+        {{localize "FRIENDSHIP_DICE.GMPanel.AddBond"}}
+      </button>
+    </div>
+  </div>
+
+  {{!-- Bond List --}}
+  {{#if bonds.length}}
+  <div class="fd-bonds-section">
+    <div class="fd-bonds-toolbar">
+      <input type="text" class="fd-filter" placeholder="{{localize 'FRIENDSHIP_DICE.GMPanel.FilterBonds'}}">
+      <label class="fd-toggle-session">
+        <input type="checkbox" class="fd-session-check" hidden>
+        <span class="fd-toggle-track"><span class="fd-toggle-knob"></span></span>
+        <span class="fd-toggle-label">{{localize "FRIENDSHIP_DICE.GMPanel.SessionOnly"}}</span>
+      </label>
+    </div>
+    <div class="fd-bonds fd-bonds-scroll">
+      {{#each bonds}}
+      <div class="fd-bond-card" data-bond-id="{{this.id}}" data-actor1-id="{{this.actor1Id}}" data-actor2-id="{{this.actor2Id}}">
+        <div class="fd-bond-pair">
+          <div class="fd-actor{{#if this.actor1Used}} fd-actor-used{{/if}}">
+            <img class="fd-avatar" src="{{this.actor1Img}}" alt="" width="36" height="36" loading="lazy">
+            <span class="fd-name">{{this.actor1Name}}</span>
+            {{#if this.actor1Used}}
+            <button type="button" data-action="resetOne" data-actor-id="{{this.actor1Id}}"
+              class="fd-btn-reset-one" title="{{localize 'FRIENDSHIP_DICE.GMPanel.ResetOne'}}">
+              <i class="fa-solid fa-rotate-left"></i>
+            </button>
+            {{/if}}
+          </div>
+          <span class="fd-heart"><i class="fa-solid fa-handshake"></i></span>
+          <div class="fd-actor{{#if this.actor2Used}} fd-actor-used{{/if}}">
+            {{#if this.actor2Used}}
+            <button type="button" data-action="resetOne" data-actor-id="{{this.actor2Id}}"
+              class="fd-btn-reset-one" title="{{localize 'FRIENDSHIP_DICE.GMPanel.ResetOne'}}">
+              <i class="fa-solid fa-rotate-left"></i>
+            </button>
+            {{/if}}
+            <span class="fd-name">{{this.actor2Name}}</span>
+            <img class="fd-avatar" src="{{this.actor2Img}}" alt="" width="36" height="36" loading="lazy">
+          </div>
+        </div>
+        <div class="fd-bond-dice">
+          <input type="number" value="{{this.quantity}}" min="1" max="10"
+            data-bond-id="{{this.id}}" data-field="quantity">
+          <select data-bond-id="{{this.id}}" data-field="size">
+            {{#each this.sizeOptions}}
+            <option value="{{this.value}}"{{#if this.selected}} selected{{/if}}>{{this.label}}</option>
+            {{/each}}
+          </select>
+          <span class="fd-formula">{{this.formula}}</span>
+          <button type="button" data-action="deleteBond" data-bond-id="{{this.id}}" class="fd-btn-del"
+            title="{{localize 'FRIENDSHIP_DICE.GMPanel.Delete'}}">
+            <i class="fa-solid fa-trash-can"></i>
+          </button>
+        </div>
+      </div>
+      {{/each}}
+    </div>
+  </div>
+  {{else}}
+  <div class="fd-empty">
+    <i class="fa-regular fa-handshake"></i>
+    <p>{{localize "FRIENDSHIP_DICE.GMPanel.NoBonds"}}</p>
+  </div>
+  {{/if}}
+
+  {{!-- Footer --}}
+  <div class="fd-footer">
+    <button type="button" data-action="resetAll" class="fd-btn-reset">
+      <i class="fa-solid fa-rotate-left"></i>
+      {{localize "FRIENDSHIP_DICE.GMPanel.ResetAll"}}
+    </button>
+  </div>
+
+</div>

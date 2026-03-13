@@ -1,0 +1,705 @@
+@layer friendship-dice {
+  /* ═══════════════════════════════════════════
+     SHARED
+     ═══════════════════════════════════════════ */
+
+  .fd-gm-panel,
+  .fd-player-panel {
+    display: flex;
+    flex-direction: column;
+    gap: 0.6rem;
+    padding: 0.4rem 0;
+    font-family: var(--font-primary);
+    height: 100%;
+    min-height: 0;
+  }
+
+  /* ── Empty State ─────────────────────────── */
+  .fd-gm-panel .fd-empty,
+  .fd-player-panel .fd-empty {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    gap: 0.4rem;
+    padding: 2rem 1rem;
+    opacity: 0.6;
+  }
+
+  .fd-gm-panel .fd-empty i,
+  .fd-player-panel .fd-empty i {
+    font-size: 2rem;
+  }
+
+  .fd-gm-panel .fd-empty p,
+  .fd-player-panel .fd-empty p {
+    margin: 0;
+    font-style: italic;
+    text-align: center;
+  }
+
+  /* ── Avatars ─────────────────────────────── */
+  .fd-gm-panel .fd-avatar,
+  .fd-player-panel .fd-avatar {
+    display: block;
+    border-radius: 50%;
+    border: 2px solid rgba(255, 255, 255, 0.15);
+    object-fit: cover;
+    flex-shrink: 0;
+    background: rgba(0, 0, 0, 0.2);
+  }
+
+  /* ── Formula Badge ───────────────────────── */
+  .fd-gm-panel .fd-formula,
+  .fd-player-panel .fd-formula {
+    display: inline-block;
+    font-weight: 700;
+    font-size: 0.8rem;
+    font-family: var(--font-mono, monospace);
+    color: #a5b4fc;
+    background: rgba(99, 102, 241, 0.12);
+    border: 1px solid rgba(99, 102, 241, 0.25);
+    border-radius: 4px;
+    padding: 1px 6px;
+    letter-spacing: 0.04em;
+    white-space: nowrap;
+    line-height: 1.5;
+  }
+
+  /* ── Filter Input ─────────────────────────── */
+  .fd-gm-panel .fd-filter,
+  .fd-player-panel .fd-filter {
+    width: 100%;
+    height: 28px;
+    font-size: 0.8rem;
+    padding: 0 8px 0 28px;
+    border: 1px solid rgba(255, 255, 255, 0.1);
+    border-radius: 14px;
+    background: rgba(0, 0, 0, 0.15)
+      url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='14' height='14' fill='rgba(255,255,255,0.4)' viewBox='0 0 512 512'%3E%3Cpath d='M416 208c0 45.9-14.9 88.3-40 122.7L502.6 457.4c12.5 12.5 12.5 32.8 0 45.3s-32.8 12.5-45.3 0L330.7 376c-34.4 25.2-76.8 40-122.7 40C93.1 416 0 322.9 0 208S93.1 0 208 0S416 93.1 416 208zM208 352a144 144 0 1 0 0-288 144 144 0 1 0 0 288z'/%3E%3C/svg%3E")
+      no-repeat 8px center;
+    color: inherit;
+    box-sizing: border-box;
+    margin-bottom: 0.4rem;
+  }
+
+  .fd-gm-panel .fd-filter:focus,
+  .fd-player-panel .fd-filter:focus {
+    border-color: rgba(255, 255, 255, 0.2);
+    outline: none;
+  }
+
+  /* ── Bonds Toolbar ─────────────────────────── */
+  .fd-gm-panel .fd-bonds-toolbar {
+    display: flex;
+    align-items: center;
+    gap: 0.5rem;
+    margin-bottom: 0.4rem;
+  }
+
+  .fd-gm-panel .fd-bonds-toolbar .fd-filter {
+    flex: 1;
+    margin-bottom: 0;
+  }
+
+  .fd-gm-panel .fd-toggle-session {
+    display: flex;
+    align-items: center;
+    gap: 0.4rem;
+    cursor: pointer;
+    user-select: none;
+  }
+
+  .fd-gm-panel .fd-toggle-track {
+    display: block;
+    width: 28px;
+    height: 16px;
+    border-radius: 8px;
+    background: rgba(255, 255, 255, 0.15);
+    position: relative;
+    flex-shrink: 0;
+    transition: background 0.2s;
+  }
+
+  .fd-gm-panel .fd-toggle-knob {
+    display: block;
+    width: 12px;
+    height: 12px;
+    border-radius: 50%;
+    background: rgba(255, 255, 255, 0.5);
+    position: absolute;
+    top: 2px;
+    left: 2px;
+    transition:
+      transform 0.2s,
+      background 0.2s;
+  }
+
+  .fd-gm-panel .fd-session-check:checked ~ .fd-toggle-track {
+    background: linear-gradient(135deg, rgba(34, 197, 94, 0.45), rgba(22, 163, 74, 0.65));
+  }
+
+  .fd-gm-panel .fd-session-check:checked ~ .fd-toggle-track .fd-toggle-knob {
+    transform: translateX(12px);
+    background: #fff;
+  }
+
+  .fd-gm-panel .fd-toggle-label {
+    font-size: 0.7rem;
+    white-space: nowrap;
+    opacity: 0.6;
+    transition: opacity 0.15s;
+  }
+
+  .fd-gm-panel .fd-toggle-session:hover .fd-toggle-label {
+    opacity: 1;
+  }
+
+  /* ── Bonds Section ─────────────────────────── */
+  .fd-gm-panel .fd-bonds-section,
+  .fd-player-panel .fd-bonds-section {
+    display: flex;
+    flex-direction: column;
+    flex: 1;
+    min-height: 0;
+  }
+
+  /* ── Bonds Container ─────────────────────── */
+  .fd-gm-panel .fd-bonds,
+  .fd-player-panel .fd-bonds {
+    display: flex;
+    flex-direction: column;
+    gap: 0.5rem;
+  }
+
+  .fd-gm-panel .fd-bonds-scroll,
+  .fd-player-panel .fd-bonds-scroll {
+    flex: 1;
+    min-height: 60px;
+    overflow-y: auto;
+    padding: 0 2px 0.5rem 0;
+  }
+
+  /* ── Bond Card (shared base) ─────────────── */
+  .fd-gm-panel .fd-bond-card,
+  .fd-player-panel .fd-bond-card {
+    display: flex;
+    flex-direction: column;
+    background: rgba(255, 255, 255, 0.04);
+    border: 1px solid rgba(255, 255, 255, 0.08);
+    border-radius: 8px;
+    padding: 0.5rem 0.6rem;
+    transition:
+      background 0.15s,
+      border-color 0.15s;
+  }
+
+  .fd-gm-panel .fd-bond-card:hover,
+  .fd-player-panel .fd-bond-card:hover {
+    background: rgba(255, 255, 255, 0.07);
+    border-color: rgba(255, 255, 255, 0.12);
+  }
+
+  /* ── Names ───────────────────────────────── */
+  .fd-gm-panel .fd-name,
+  .fd-player-panel .fd-name {
+    font-weight: 600;
+    font-size: 0.85rem;
+    overflow: hidden;
+    text-overflow: ellipsis;
+    white-space: nowrap;
+  }
+
+  /* ═══════════════════════════════════════════
+     GM PANEL
+     ═══════════════════════════════════════════ */
+
+  /* ── Add Section ─────────────────────────── */
+  .fd-gm-panel .fd-add-section {
+    display: flex;
+    flex-direction: column;
+    gap: 0.4rem;
+    border: 1px dashed rgba(255, 255, 255, 0.12);
+    border-radius: 8px;
+    padding: 0.6rem;
+    background: rgba(255, 255, 255, 0.02);
+  }
+
+  .fd-gm-panel .fd-add-title {
+    display: flex;
+    align-items: center;
+    gap: 0.4rem;
+    font-size: 0.75rem;
+    font-weight: 700;
+    text-transform: uppercase;
+    letter-spacing: 0.06em;
+    opacity: 0.7;
+    margin-bottom: 0.1rem;
+  }
+
+  .fd-gm-panel .fd-add-actors {
+    display: flex;
+    align-items: center;
+    gap: 0.3rem;
+  }
+
+  .fd-gm-panel .fd-add-heart {
+    color: #c0392b;
+    font-size: 0.75rem;
+    flex-shrink: 0;
+    padding: 0 2px;
+  }
+
+  /* ── Actor Picker ──────────────────────── */
+  .fd-gm-panel .fd-picker {
+    flex: 1;
+    min-width: 0;
+    position: relative;
+  }
+
+  .fd-gm-panel .fd-picker-input {
+    width: 100%;
+    height: 28px;
+    font-size: 0.8rem;
+    padding: 0 8px;
+    border: 1px solid rgba(255, 255, 255, 0.12);
+    border-radius: 4px;
+    background: rgba(0, 0, 0, 0.2);
+    color: inherit;
+    box-sizing: border-box;
+  }
+
+  .fd-gm-panel .fd-picker-input:focus {
+    border-color: rgba(255, 255, 255, 0.25);
+    outline: none;
+  }
+
+  .fd-gm-panel .fd-picker-dropdown {
+    display: none;
+    position: absolute;
+    top: 100%;
+    left: 0;
+    right: 0;
+    z-index: 100;
+    max-height: 180px;
+    overflow-y: auto;
+    background: #1a1a2e;
+    border: 1px solid rgba(255, 255, 255, 0.15);
+    border-radius: 0 0 6px 6px;
+    box-shadow: 0 4px 12px rgba(0, 0, 0, 0.4);
+  }
+
+  .fd-gm-panel .fd-picker-option {
+    display: flex;
+    align-items: center;
+    gap: 0.4rem;
+    padding: 4px 8px;
+    cursor: pointer;
+    font-size: 0.8rem;
+    transition: background 0.1s;
+  }
+
+  .fd-gm-panel .fd-picker-option:hover {
+    background: rgba(255, 255, 255, 0.1);
+  }
+
+  .fd-gm-panel .fd-picker-avatar {
+    border-radius: 50%;
+    object-fit: cover;
+    flex-shrink: 0;
+  }
+
+  .fd-gm-panel .fd-add-bottom {
+    display: flex;
+    align-items: center;
+    gap: 0.3rem;
+  }
+
+  .fd-gm-panel .fd-add-bottom input[type="number"] {
+    width: 40px;
+    height: 28px;
+    text-align: center;
+    font-size: 0.8rem;
+    border: 1px solid rgba(255, 255, 255, 0.12);
+    border-radius: 4px;
+    background: rgba(0, 0, 0, 0.2);
+    color: inherit;
+    padding: 0;
+  }
+
+  .fd-gm-panel .fd-add-bottom select {
+    width: 54px;
+    height: 28px;
+    font-size: 0.8rem;
+    border: 1px solid rgba(255, 255, 255, 0.12);
+    border-radius: 4px;
+    background: rgba(0, 0, 0, 0.2);
+    color: inherit;
+    padding: 0 4px;
+  }
+
+  .fd-gm-panel .fd-btn-add {
+    margin-left: auto;
+    display: flex;
+    align-items: center;
+    gap: 0.3rem;
+    height: 28px;
+    padding: 0 10px;
+    font-size: 0.8rem;
+    font-weight: 600;
+    cursor: pointer;
+    border: 1px solid rgba(74, 222, 128, 0.3);
+    border-radius: 6px;
+    background: linear-gradient(135deg, rgba(34, 197, 94, 0.45), rgba(22, 163, 74, 0.65));
+    color: #bbf7d0;
+    transition:
+      background 0.15s,
+      border-color 0.15s;
+    white-space: nowrap;
+  }
+
+  .fd-gm-panel .fd-btn-add:hover {
+    background: linear-gradient(135deg, rgba(34, 197, 94, 0.65), rgba(22, 163, 74, 0.85));
+    border-color: rgba(74, 222, 128, 0.5);
+  }
+
+  /* ── Bond Pair Row ───────────────────────── */
+  .fd-gm-panel .fd-bond-pair {
+    display: flex;
+    align-items: center;
+    gap: 0.35rem;
+    margin-bottom: 0.35rem;
+  }
+
+  .fd-gm-panel .fd-actor {
+    display: flex;
+    align-items: center;
+    gap: 0.3rem;
+    flex: 1;
+    min-width: 0;
+  }
+
+  .fd-gm-panel .fd-actor:last-of-type {
+    justify-content: flex-end;
+  }
+
+  .fd-gm-panel .fd-actor-used {
+    opacity: 0.5;
+  }
+
+  .fd-gm-panel .fd-btn-reset-one {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    width: 20px;
+    height: 20px;
+    flex-shrink: 0;
+    cursor: pointer;
+    border: none;
+    border-radius: 50%;
+    background: rgba(231, 76, 60, 0.2);
+    color: #e74c3c;
+    font-size: 0.55rem;
+    padding: 0;
+    transition:
+      background 0.15s,
+      color 0.15s;
+  }
+
+  .fd-gm-panel .fd-btn-reset-one:hover {
+    background: #e74c3c;
+    color: #fff;
+  }
+
+  .fd-gm-panel .fd-heart {
+    color: #e74c3c;
+    font-size: 0.7rem;
+    flex-shrink: 0;
+    padding: 0 2px;
+  }
+
+  /* ── Bond Dice Row ───────────────────────── */
+  .fd-gm-panel .fd-bond-dice {
+    display: flex;
+    align-items: center;
+    gap: 0.3rem;
+    padding-top: 0.2rem;
+    border-top: 1px solid rgba(255, 255, 255, 0.05);
+  }
+
+  .fd-gm-panel .fd-bond-dice input[type="number"] {
+    width: 40px;
+    height: 26px;
+    text-align: center;
+    font-size: 0.8rem;
+    border: 1px solid rgba(255, 255, 255, 0.1);
+    border-radius: 4px;
+    background: rgba(0, 0, 0, 0.15);
+    color: inherit;
+    padding: 0;
+  }
+
+  .fd-gm-panel .fd-bond-dice select {
+    width: 54px;
+    height: 26px;
+    font-size: 0.8rem;
+    border: 1px solid rgba(255, 255, 255, 0.1);
+    border-radius: 4px;
+    background: rgba(0, 0, 0, 0.15);
+    color: inherit;
+    padding: 0 4px;
+  }
+
+  .fd-gm-panel .fd-bond-dice .fd-formula {
+    margin-left: auto;
+  }
+
+  .fd-gm-panel .fd-btn-del {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    width: 26px;
+    height: 26px;
+    flex-shrink: 0;
+    cursor: pointer;
+    border: none;
+    border-radius: 50%;
+    background: transparent;
+    color: inherit;
+    opacity: 0.35;
+    font-size: 0.7rem;
+    transition:
+      opacity 0.15s,
+      background 0.15s,
+      color 0.15s;
+    padding: 0;
+  }
+
+  .fd-gm-panel .fd-btn-del:hover {
+    opacity: 1;
+    background: #e74c3c;
+    color: #fff;
+  }
+
+  /* ── Footer ──────────────────────────────── */
+  .fd-gm-panel .fd-footer {
+    display: flex;
+    justify-content: center;
+    padding-top: 0.4rem;
+    border-top: 1px solid rgba(255, 255, 255, 0.06);
+  }
+
+  .fd-gm-panel .fd-btn-reset {
+    display: flex;
+    align-items: center;
+    gap: 0.35rem;
+    height: 28px;
+    padding: 0 12px;
+    font-size: 0.8rem;
+    cursor: pointer;
+    border: 1px solid rgba(255, 255, 255, 0.1);
+    border-radius: 14px;
+    background: transparent;
+    color: inherit;
+    opacity: 0.7;
+    transition:
+      opacity 0.15s,
+      background 0.15s;
+  }
+
+  .fd-gm-panel .fd-btn-reset:hover {
+    opacity: 1;
+    background: rgba(255, 255, 255, 0.08);
+  }
+
+  /* ═══════════════════════════════════════════
+     PLAYER PANEL
+     ═══════════════════════════════════════════ */
+
+  .fd-player-panel .fd-bond-card {
+    flex-direction: row;
+    align-items: center;
+    gap: 0.6rem;
+  }
+
+  .fd-player-panel .fd-bond-info {
+    display: flex;
+    flex-direction: column;
+    gap: 0.15rem;
+    flex: 1;
+    min-width: 0;
+    overflow: hidden;
+  }
+
+  .fd-player-panel .fd-bond-info .fd-name {
+    font-size: 0.95rem;
+  }
+
+  .fd-player-panel .fd-bond-info .fd-formula {
+    align-self: flex-start;
+    font-size: 0.75rem;
+    padding: 1px 5px;
+  }
+
+  .fd-player-panel .fd-btn-roll {
+    display: flex;
+    align-items: center;
+    gap: 0.35rem;
+    flex-shrink: 0;
+    height: 30px;
+    padding: 0 12px;
+    font-size: 0.8rem;
+    font-weight: 600;
+    cursor: pointer;
+    border: 1px solid rgba(129, 140, 248, 0.3);
+    border-radius: 6px;
+    background: linear-gradient(135deg, rgba(99, 102, 241, 0.5), rgba(79, 70, 229, 0.7));
+    color: #e0e7ff;
+    transition:
+      background 0.15s,
+      border-color 0.15s,
+      transform 0.1s;
+    white-space: nowrap;
+  }
+
+  .fd-player-panel .fd-btn-roll:hover {
+    background: linear-gradient(135deg, rgba(99, 102, 241, 0.7), rgba(79, 70, 229, 0.9));
+    border-color: rgba(129, 140, 248, 0.5);
+    transform: scale(1.02);
+  }
+
+  .fd-player-panel .fd-btn-roll:active {
+    transform: scale(0.97);
+  }
+
+  .fd-player-panel .fd-badge-used {
+    display: flex;
+    align-items: center;
+    gap: 0.25rem;
+    flex-shrink: 0;
+    font-size: 0.7rem;
+    font-weight: 600;
+    text-transform: uppercase;
+    letter-spacing: 0.05em;
+    opacity: 0.5;
+    padding: 4px 10px;
+    border-radius: 12px;
+    background: rgba(255, 255, 255, 0.06);
+  }
+
+  .fd-player-panel .fd-used {
+    opacity: 0.45;
+  }
+
+  /* ═══════════════════════════════════════════
+     RULES TOOLTIP
+     ═══════════════════════════════════════════ */
+
+  .fd-gm-panel .fd-info-bar,
+  .fd-player-panel .fd-info-bar {
+    display: flex;
+    justify-content: flex-end;
+  }
+
+  .fd-gm-panel .fd-rules-trigger,
+  .fd-player-panel .fd-rules-trigger {
+    position: relative;
+  }
+
+  .fd-gm-panel .fd-rules-icon,
+  .fd-player-panel .fd-rules-icon {
+    cursor: help;
+    opacity: 0.35;
+    font-size: 0.85rem;
+    transition: opacity 0.15s;
+  }
+
+  .fd-gm-panel .fd-rules-trigger:hover .fd-rules-icon,
+  .fd-player-panel .fd-rules-trigger:hover .fd-rules-icon {
+    opacity: 0.8;
+  }
+
+  .fd-gm-panel .fd-rules-popup,
+  .fd-player-panel .fd-rules-popup {
+    display: none;
+    position: absolute;
+    top: calc(100% + 4px);
+    right: 0;
+    z-index: 100;
+    width: 280px;
+    background: #1a1a2e;
+    border: 1px solid rgba(255, 255, 255, 0.15);
+    border-radius: 6px;
+    padding: 0.6rem 0.7rem;
+    box-shadow: 0 4px 16px rgba(0, 0, 0, 0.5);
+  }
+
+  .fd-gm-panel .fd-rules-popup::before,
+  .fd-player-panel .fd-rules-popup::before {
+    content: "";
+    position: absolute;
+    top: -8px;
+    left: 0;
+    right: 0;
+    height: 8px;
+  }
+
+  .fd-gm-panel .fd-rules-trigger:hover .fd-rules-popup,
+  .fd-player-panel .fd-rules-trigger:hover .fd-rules-popup {
+    display: block;
+  }
+
+  .fd-gm-panel .fd-rules-title,
+  .fd-player-panel .fd-rules-title {
+    font-weight: 700;
+    font-size: 0.8rem;
+    margin-bottom: 0.35rem;
+  }
+
+  .fd-gm-panel .fd-rules-list,
+  .fd-player-panel .fd-rules-list {
+    display: flex;
+    flex-direction: column;
+    gap: 0.2rem;
+  }
+
+  .fd-gm-panel .fd-rules-item,
+  .fd-player-panel .fd-rules-item {
+    font-size: 0.72rem;
+    line-height: 1.45;
+    opacity: 0.75;
+    padding-left: 0.8rem;
+    position: relative;
+  }
+
+  .fd-gm-panel .fd-rules-item::before,
+  .fd-player-panel .fd-rules-item::before {
+    content: "•";
+    position: absolute;
+    left: 0;
+    opacity: 0.4;
+  }
+
+  .fd-gm-panel .fd-btn-send-rules {
+    display: flex;
+    align-items: center;
+    gap: 0.3rem;
+    width: 100%;
+    justify-content: center;
+    margin-top: 0.5rem;
+    height: 26px;
+    font-size: 0.72rem;
+    font-weight: 600;
+    cursor: pointer;
+    border: 1px solid rgba(255, 255, 255, 0.1);
+    border-radius: 4px;
+    background: rgba(255, 255, 255, 0.06);
+    color: inherit;
+    opacity: 0.7;
+    transition: opacity 0.15s, background 0.15s;
+  }
+
+  .fd-gm-panel .fd-btn-send-rules:hover {
+    opacity: 1;
+    background: rgba(255, 255, 255, 0.1);
+  }
+}
