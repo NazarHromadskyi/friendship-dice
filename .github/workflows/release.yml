@@ -44,3 +44,23 @@ jobs:
             module.json
             module.zip
           generate_release_notes: true
+
+      - name: Publish to Foundry VTT
+        run: |
+          curl -s -X POST \
+            "https://api.foundryvtt.com/_api/packages/release_version/" \
+            -H "Content-Type: application/json" \
+            -H "Authorization: ${{ secrets.FOUNDRY_RELEASE_TOKEN }}" \
+            -d '{
+              "id": "friendship-dice",
+              "dry-run": false,
+              "release": {
+                "version": "${{ steps.version.outputs.version }}",
+                "manifest": "https://github.com/${{ github.repository }}/releases/download/${{ github.ref_name }}/module.json",
+                "notes": "https://github.com/${{ github.repository }}/releases/tag/${{ github.ref_name }}",
+                "compatibility": {
+                  "minimum": "13",
+                  "verified": "13.341"
+                }
+              }
+            }'
