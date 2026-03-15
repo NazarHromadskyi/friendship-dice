@@ -9,8 +9,9 @@ let _onBondUsed = () => {};
  * Styled to match the player panel's bond cards.
  * Returns the selected bond object or null if skipped/cancelled.
  */
-async function showBondSelectionDialog(bonds) {
-  const cardsHtml = bonds
+async function showBondSelectionDialog(bonds, d20Result) {
+  const sorted = [...bonds].sort((a, b) => b.expectedValue - a.expectedValue);
+  const cardsHtml = sorted
     .map(
       (bond) => `
     <div class="fd-bond-card fd-dialog-bond" data-bond-id="${bond.id}">
@@ -23,8 +24,13 @@ async function showBondSelectionDialog(bonds) {
     )
     .join("");
 
+  const d20Html = d20Result != null
+    ? `<div class="fd-dialog-d20"><i class="fa-solid fa-dice-d20"></i> ${d20Result}</div>`
+    : "";
+
   const content = `
     <div class="fd-player-panel fd-dialog-panel">
+      ${d20Html}
       <div class="fd-bonds">
         ${cardsHtml}
       </div>
@@ -91,13 +97,27 @@ function addBonusToRoll(roll, bonusRoll) {
  */
 async function applyFriendshipBonus(actor, result) {
   if (!result || !actor || isUsed(actor)) return result;
+  if (!game.settings.get(MODULE_ID, "rollDialog")) return result;
+
+  // Check d20 threshold — skip dialog if the d20 result is above the threshold
+  const threshold = game.settings.get(MODULE_ID, "rollThreshold");
+  if (threshold > 0) {
+    const rolls = Array.isArray(result) ? result : [result];
+    const d20 = rolls[0]?.dice?.find((d) => d.faces === 20);
+    if (d20 && d20.total >= threshold) return result;
+  }
 
   const bonds = getBondsForActor(actor.id);
   if (!bonds.length) return result;
 
+  // Extract d20 result for the dialog header
+  const resultRolls = Array.isArray(result) ? result : [result];
+  const d20Die = resultRolls[0]?.dice?.find((d) => d.faces === 20);
+  const d20Result = d20Die?.total ?? null;
+
   let selectedBond;
   try {
-    selectedBond = await showBondSelectionDialog(bonds);
+    selectedBond = await showBondSelectionDialog(bonds, d20Result);
   } catch {
     return result;
   }

@@ -23,6 +23,25 @@ Hooks.once("init", () => {
     type: Number,
     default: 0,
   });
+
+  game.settings.register(MODULE_ID, "rollDialog", {
+    name: "FRIENDSHIP_DICE.Settings.RollDialog.Name",
+    hint: "FRIENDSHIP_DICE.Settings.RollDialog.Hint",
+    scope: "client",
+    config: true,
+    type: Boolean,
+    default: true,
+  });
+
+  game.settings.register(MODULE_ID, "rollThreshold", {
+    name: "FRIENDSHIP_DICE.Settings.RollThreshold.Name",
+    hint: "FRIENDSHIP_DICE.Settings.RollThreshold.Hint",
+    scope: "client",
+    config: true,
+    type: Number,
+    default: 0,
+    range: { min: 0, max: 20, step: 1 },
+  });
 });
 
 /* ── Ready ───────────────────────────────────────────── */

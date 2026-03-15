@@ -43,6 +43,11 @@
   "FRIENDSHIP_DICE.Rules.Limit": "Після використання ви не можете використати жодний кубик дружби, допоки не завершите довгий відпочинок.",
   "FRIENDSHIP_DICE.Rules.SendToChat": "Надіслати в чат",
 
+  "FRIENDSHIP_DICE.Settings.RollDialog.Name": "Показувати діалог кубика дружби на кидках",
+  "FRIENDSHIP_DICE.Settings.RollDialog.Hint": "Якщо увімкнено, при кидках навичок, перевірках характеристик, рятівних кидках та атаках з'являтиметься діалог з пропозицією додати кубик дружби. Потребує midi-qol. Вимкніть, щоб використовувати лише кнопку «Кинути» в панелі.",
+  "FRIENDSHIP_DICE.Settings.RollThreshold.Name": "Поріг d20 для діалогу",
+  "FRIENDSHIP_DICE.Settings.RollThreshold.Hint": "Показувати діалог кубика дружби лише коли результат на d20 нижче цього значення. Встановіть 0, щоб показувати завжди.",
+
   "FRIENDSHIP_DICE.Dialog.Title": "Кубик Дружби",
   "FRIENDSHIP_DICE.Dialog.Content": "Використати кубик дружби для цього кидка?",
   "FRIENDSHIP_DICE.Dialog.Skip": "Пропустити"
