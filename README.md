@@ -10,9 +10,11 @@ When two player characters share a friendly bond, they gain a friendship die —
 - **GM panel** — create, edit, and remove bonds; change dice formulas (quantity + die size); reset uses for all or individual characters
 - **Player panel** — view your bonds (friend name, avatar, dice formula, available/used status) and roll with one click
 - **Chat integration** — rolling posts a styled message to chat (e.g. _"Arwen uses friendship die with Gimli! 3d8 → 14"_)
+- **midi-qol integration** — when midi-qol is active, a dialog automatically offers to add a friendship die to any skill check, ability check, saving throw, or attack roll. The bonus is part of the same roll result alongside Guidance, Bardic Inspiration, and other bonuses — no duplicate messages
+- **CPR compatibility** — works alongside Chris's Premades (Cauldron of Plentiful Resources) bonus pass; all bonuses appear in one clean chat message
 - **Long rest auto-reset** — automatic reset for dnd5e when a character completes a long rest; manual "Reset All" button for other systems
 - **Bilingual UI** — English and Ukrainian (Українська)
-- **System-agnostic** — works with any game system; optional dnd5e rest hook integration
+- **System-agnostic** — works with any game system; optional dnd5e rest hook and midi-qol integration
 
 ## Rules
 
@@ -45,6 +47,18 @@ When two player characters share a friendly bond, they gain a friendship die —
 2. A heart/handshake icon appears in the **Token Controls** group on the left sidebar
 3. **GM** — click the icon to open the bond management panel: add character pairs, set dice formulas, remove bonds, and reset uses
 4. **Players** — click the icon to see your bonds and roll; make sure your character is set in **User Configuration**
+
+## Recommended Modules
+
+These modules are optional but enhance the experience:
+
+| Module | Benefit |
+| ------ | ------- |
+| [midi-qol](https://foundryvtt.com/packages/midi-qol) | Automatic friendship die dialog on d20 rolls |
+| [lib-wrapper](https://foundryvtt.com/packages/lib-wrapper) | Reliable roll method wrapping (required if midi-qol is used) |
+| [Chris's Premades](https://foundryvtt.com/packages/chris-premades) | Full compatibility — friendship die appears alongside Guidance and other bonuses |
+
+Without these modules, the friendship die works via the player panel's manual Roll button.
 
 ## Compatibility
 
