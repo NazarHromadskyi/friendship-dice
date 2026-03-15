@@ -50,5 +50,6 @@
 
   "FRIENDSHIP_DICE.Dialog.Title": "Friendship Die",
   "FRIENDSHIP_DICE.Dialog.Content": "Use a friendship die for this roll?",
-  "FRIENDSHIP_DICE.Dialog.Skip": "Skip"
+  "FRIENDSHIP_DICE.Dialog.Skip": "Skip",
+  "FRIENDSHIP_DICE.Roll.Label": "Friendship Die"
 }

@@ -103,6 +103,9 @@ export class GMPanel extends HandlebarsApplicationMixin(ApplicationV2) {
   }
 
   _onRender(_context, _options) {
+    // Inject rules info icon into window header
+    this.#injectHeaderRulesIcon();
+
     // Bond dice change listeners
     this.element.querySelectorAll("[data-field]").forEach((el) => {
       el.addEventListener("change", async (e) => {
@@ -323,6 +326,34 @@ export class GMPanel extends HandlebarsApplicationMixin(ApplicationV2) {
     ui.notifications.info(game.i18n.format("FRIENDSHIP_DICE.GMPanel.ResetOneDone", { actor: actor.name }));
     emitRefresh();
     this.render();
+  }
+
+  #injectHeaderRulesIcon() {
+    const header = this.element.closest(".application")?.querySelector(".window-header");
+    if (!header || header.querySelector(".fd-rules-trigger")) return;
+
+    const trigger = document.createElement("div");
+    trigger.classList.add("fd-rules-trigger");
+    trigger.innerHTML = `
+      <i class="fa-solid fa-circle-info fd-rules-icon"></i>
+      <div class="fd-rules-popup">
+        <div class="fd-rules-title">${game.i18n.localize("FRIENDSHIP_DICE.Rules.Title")}</div>
+        <div class="fd-rules-list">
+          <div class="fd-rules-item">${game.i18n.localize("FRIENDSHIP_DICE.Rules.Bond")}</div>
+          <div class="fd-rules-item">${game.i18n.localize("FRIENDSHIP_DICE.Rules.Usage")}</div>
+          <div class="fd-rules-item">${game.i18n.localize("FRIENDSHIP_DICE.Rules.Nearby")}</div>
+          <div class="fd-rules-item">${game.i18n.localize("FRIENDSHIP_DICE.Rules.Limit")}</div>
+        </div>
+        <button type="button" class="fd-btn-send-rules">
+          <i class="fa-solid fa-comment-dots"></i>
+          ${game.i18n.localize("FRIENDSHIP_DICE.Rules.SendToChat")}
+        </button>
+      </div>`;
+
+    trigger.querySelector(".fd-btn-send-rules").addEventListener("click", () => postRulesToChat());
+
+    const closeBtn = header.querySelector(".header-control.close") ?? header.lastElementChild;
+    header.insertBefore(trigger, closeBtn);
   }
 
   /** @this {GMPanel} */

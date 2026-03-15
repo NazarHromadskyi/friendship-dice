@@ -128,7 +128,8 @@ async function applyFriendshipBonus(actor, result) {
     const rolls = isArray ? result : [result];
     let roll = rolls[0];
 
-    const bonusRoll = await new Roll(`+ ${selectedBond.formula}`).evaluate();
+    const label = game.i18n.localize("FRIENDSHIP_DICE.Roll.Label");
+    const bonusRoll = await new Roll(`+ ${selectedBond.formula}[${label}]`).evaluate();
     roll = addBonusToRoll(roll, bonusRoll);
 
     await markUsed(actor);

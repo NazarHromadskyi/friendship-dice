@@ -50,5 +50,6 @@
 
   "FRIENDSHIP_DICE.Dialog.Title": "Кубик Дружби",
   "FRIENDSHIP_DICE.Dialog.Content": "Використати кубик дружби для цього кидка?",
-  "FRIENDSHIP_DICE.Dialog.Skip": "Пропустити"
+  "FRIENDSHIP_DICE.Dialog.Skip": "Пропустити",
+  "FRIENDSHIP_DICE.Roll.Label": "Кубик Дружби"
 }

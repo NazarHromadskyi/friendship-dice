@@ -735,32 +735,29 @@
      RULES TOOLTIP
      ═══════════════════════════════════════════ */
 
-  .fd-gm-panel .fd-info-bar,
-  .fd-player-panel .fd-info-bar {
-    display: flex;
-    justify-content: flex-end;
+  .friendship-dice .window-header {
+    overflow: visible;
   }
 
-  .fd-gm-panel .fd-rules-trigger,
-  .fd-player-panel .fd-rules-trigger {
+  .friendship-dice .window-header .fd-rules-trigger {
     position: relative;
+    display: flex;
+    align-items: center;
+    margin-right: 0.25rem;
   }
 
-  .fd-gm-panel .fd-rules-icon,
-  .fd-player-panel .fd-rules-icon {
+  .friendship-dice .window-header .fd-rules-icon {
     cursor: help;
     opacity: 0.35;
-    font-size: 0.85rem;
+    font-size: var(--font-size-14, 14px);
     transition: opacity 0.15s;
   }
 
-  .fd-gm-panel .fd-rules-trigger:hover .fd-rules-icon,
-  .fd-player-panel .fd-rules-trigger:hover .fd-rules-icon {
+  .friendship-dice .window-header .fd-rules-trigger:hover .fd-rules-icon {
     opacity: 0.8;
   }
 
-  .fd-gm-panel .fd-rules-popup,
-  .fd-player-panel .fd-rules-popup {
+  .friendship-dice .window-header .fd-rules-popup {
     display: none;
     position: absolute;
     top: calc(100% + 4px);
@@ -774,8 +771,7 @@
     box-shadow: 0 4px 16px rgba(0, 0, 0, 0.5);
   }
 
-  .fd-gm-panel .fd-rules-popup::before,
-  .fd-player-panel .fd-rules-popup::before {
+  .friendship-dice .window-header .fd-rules-popup::before {
     content: "";
     position: absolute;
     top: -8px;
@@ -784,27 +780,23 @@
     height: 8px;
   }
 
-  .fd-gm-panel .fd-rules-trigger:hover .fd-rules-popup,
-  .fd-player-panel .fd-rules-trigger:hover .fd-rules-popup {
+  .friendship-dice .window-header .fd-rules-trigger:hover .fd-rules-popup {
     display: block;
   }
 
-  .fd-gm-panel .fd-rules-title,
-  .fd-player-panel .fd-rules-title {
+  .friendship-dice .window-header .fd-rules-title {
     font-weight: 700;
     font-size: 0.8rem;
     margin-bottom: 0.35rem;
   }
 
-  .fd-gm-panel .fd-rules-list,
-  .fd-player-panel .fd-rules-list {
+  .friendship-dice .window-header .fd-rules-list {
     display: flex;
     flex-direction: column;
     gap: 0.2rem;
   }
 
-  .fd-gm-panel .fd-rules-item,
-  .fd-player-panel .fd-rules-item {
+  .friendship-dice .window-header .fd-rules-item {
     font-size: 0.72rem;
     line-height: 1.45;
     opacity: 0.75;
@@ -812,15 +804,14 @@
     position: relative;
   }
 
-  .fd-gm-panel .fd-rules-item::before,
-  .fd-player-panel .fd-rules-item::before {
+  .friendship-dice .window-header .fd-rules-item::before {
     content: "•";
     position: absolute;
     left: 0;
     opacity: 0.4;
   }
 
-  .fd-gm-panel .fd-btn-send-rules {
+  .friendship-dice .window-header .fd-btn-send-rules {
     display: flex;
     align-items: center;
     gap: 0.3rem;
@@ -839,7 +830,7 @@
     transition: opacity 0.15s, background 0.15s;
   }
 
-  .fd-gm-panel .fd-btn-send-rules:hover {
+  .friendship-dice .window-header .fd-btn-send-rules:hover {
     opacity: 1;
     background: rgba(255, 255, 255, 0.1);
   }
