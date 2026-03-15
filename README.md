@@ -2,7 +2,7 @@
 
 A [Foundry VTT](https://foundryvtt.com/) module that adds a homebrew **Friendship Dice** mechanic for D&D and other systems.
 
-When two player characters share a friendly bond, they gain a friendship die — a tangible representation of their connection. The GM sets the dice formula (1d4, 2d6, 3d8, etc.), and once per long rest a player can roll their friendship die and add the result to any check, as long as their bonded friend is nearby.
+When two player characters share a friendly bond, they gain a friendship die — a tangible representation of their connection. The GM sets the dice formula (1d4, 2d6, 3d8, etc.), and a player can roll their friendship die and add the result to any check, as long as their bonded friend is nearby. Once used, the ability is regained after finishing a long rest.
 
 ## Features
 
@@ -17,9 +17,9 @@ When two player characters share a friendly bond, they gain a friendship die —
 ## Rules
 
 1. A bond is a pair of player characters with a dice formula set by the GM (e.g. 1d4, 2d8, 3d10)
-2. Once per long rest, a player can roll **one** of their friendship dice and add the result to any check
+2. A player can roll **one** of their friendship dice and add the result to any check
 3. The bonded friend must be nearby (within 10 feet)
-4. After rolling, the character cannot use any friendship die again until completing a long rest
+4. Once used, the character can't use any friendship die again until they finish a long rest
 5. Only the GM can create, upgrade, or remove bonds
 
 ## Installation
