@@ -139,7 +139,11 @@ async function applyFriendshipBonus(actor, result) {
       actor: actor.name,
       partner: selectedBond.partnerName,
     });
-    ui.notifications.info(flavor);
+    ChatMessage.create({
+      content: `<div class="fd-chat-bonus">${flavor} <strong>${selectedBond.formula} → ${bonusRoll.total}</strong></div>`,
+      speaker: ChatMessage.getSpeaker({ actor }),
+      type: CONST.CHAT_MESSAGE_STYLES.OTHER,
+    });
 
     return isArray ? [roll, ...rolls.slice(1)] : roll;
   } catch (e) {
