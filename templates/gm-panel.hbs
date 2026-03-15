@@ -24,6 +24,13 @@
       <i class="fa-solid fa-plus-circle"></i>
       {{localize "FRIENDSHIP_DICE.GMPanel.AddBond"}}
     </div>
+    <div class="fd-type-filter">
+      {{#each actorTypes}}
+      <button type="button" class="fd-type-chip{{#if this.active}} active{{/if}}" data-actor-type="{{this.type}}">
+        {{this.label}}
+      </button>
+      {{/each}}
+    </div>
     <div class="fd-add-actors">
       <div class="fd-picker" data-target="actorId1">
         <input type="text" class="fd-picker-input" placeholder="{{localize 'FRIENDSHIP_DICE.GMPanel.Actor1'}}" autocomplete="off">
@@ -58,9 +65,8 @@
         <option value="{{this.value}}"{{#if this.selected}} selected{{/if}}>{{this.label}}</option>
         {{/each}}
       </select>
-      <button type="button" data-action="addBond" class="fd-btn-add">
+      <button type="button" data-action="addBond" class="fd-btn-add" data-tooltip="{{localize "FRIENDSHIP_DICE.GMPanel.AddBond"}}">
         <i class="fa-solid fa-plus"></i>
-        {{localize "FRIENDSHIP_DICE.GMPanel.AddBond"}}
       </button>
     </div>
   </div>

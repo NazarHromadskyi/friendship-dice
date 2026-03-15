@@ -68,11 +68,22 @@ export class GMPanel extends HandlebarsApplicationMixin(ApplicationV2) {
       };
     });
 
+    const allowedTypes = this._actorTypes ?? new Set(["character"]);
     const actors = game.actors
-      .filter((a) => a.hasPlayerOwner)
+      .filter((a) => allowedTypes.has(a.type))
       .sort((a, b) => a.name.localeCompare(b.name));
 
-    return { bonds: enrichedBonds, actors, dieSizes: makeSizeOptions(4) };
+    const actorTypes = game.documentTypes.Actor
+      .filter((t) => t !== "base")
+      .map((t) => ({
+        type: t,
+        label: CONFIG.Actor.typeLabels[t]
+          ? game.i18n.localize(CONFIG.Actor.typeLabels[t])
+          : t,
+        active: allowedTypes.has(t),
+      }));
+
+    return { bonds: enrichedBonds, actors, actorTypes, dieSizes: makeSizeOptions(4) };
   }
 
   _onRender(_context, _options) {
@@ -84,6 +95,20 @@ export class GMPanel extends HandlebarsApplicationMixin(ApplicationV2) {
         const value = Number(e.currentTarget.value);
         await updateBond(bondId, { [field]: value });
         emitRefresh();
+        this.render();
+      });
+    });
+
+    // Actor type filter chips
+    this.element.querySelectorAll(".fd-type-chip").forEach((chip) => {
+      chip.addEventListener("click", () => {
+        const type = chip.dataset.actorType;
+        if (!this._actorTypes) this._actorTypes = new Set(["character"]);
+        if (this._actorTypes.has(type)) {
+          this._actorTypes.delete(type);
+        } else {
+          this._actorTypes.add(type);
+        }
         this.render();
       });
     });

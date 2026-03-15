@@ -249,6 +249,42 @@
     padding: 0 2px;
   }
 
+  /* ── Actor Type Filter ────────────────── */
+  .fd-gm-panel .fd-type-filter {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 0.25rem;
+  }
+
+  .fd-gm-panel .fd-type-chip {
+    height: 22px;
+    padding: 0 8px;
+    font-size: 0.7rem;
+    font-weight: 600;
+    cursor: pointer;
+    border: 1px solid rgba(255, 255, 255, 0.1);
+    border-radius: 11px;
+    background: transparent;
+    color: inherit;
+    opacity: 0.45;
+    transition:
+      opacity 0.15s,
+      background 0.15s,
+      border-color 0.15s;
+  }
+
+  .fd-gm-panel .fd-type-chip:hover {
+    opacity: 0.75;
+    background: rgba(255, 255, 255, 0.06);
+  }
+
+  .fd-gm-panel .fd-type-chip.active {
+    opacity: 1;
+    background: rgba(99, 102, 241, 0.2);
+    border-color: rgba(129, 140, 248, 0.4);
+    color: #c7d2fe;
+  }
+
   /* ── Actor Picker ──────────────────────── */
   .fd-gm-panel .fd-picker {
     flex: 1;
