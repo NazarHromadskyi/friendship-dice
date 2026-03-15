@@ -25,6 +25,9 @@ export function getBondsForActor(actorId) {
       quantity: bond.quantity,
       size: bond.size,
       formula: `${bond.quantity}d${bond.size}`,
+      expectedValue: bond.quantity * (bond.size + 1) / 2,
+      createdAt: bond.createdAt ?? 0,
+      updatedAt: bond.updatedAt ?? 0,
     });
   }
 
@@ -49,12 +52,15 @@ export async function createBond(actorId1, actorId2, quantity = 1, size = 4) {
     return;
   }
 
+  const now = Date.now();
   const bond = {
     id: foundry.utils.randomID(),
     actorId1,
     actorId2,
     quantity: Math.max(1, Math.round(quantity)),
     size: [4, 6, 8, 10, 12, 20].includes(size) ? size : 4,
+    createdAt: now,
+    updatedAt: now,
   };
 
   bonds.push(bond);
@@ -71,6 +77,7 @@ export async function updateBond(bondId, { quantity, size } = {}) {
 
   if (quantity !== undefined) bond.quantity = Math.max(1, Math.round(quantity));
   if (size !== undefined && [4, 6, 8, 10, 12, 20].includes(size)) bond.size = size;
+  bond.updatedAt = Date.now();
 
   await game.settings.set(MODULE_ID, "bonds", bonds);
 }

@@ -3,6 +3,12 @@ import { postFriendshipRoll } from "../chat.mjs";
 import { emitRefresh } from "../main.mjs";
 
 const { ApplicationV2, HandlebarsApplicationMixin } = foundry.applications.api;
+const PLAYER_SORT_MODES = ["created", "name", "dice"];
+const SORT_ICONS = {
+  created: "fa-solid fa-arrow-down-1-9",
+  name: "fa-solid fa-arrow-down-a-z",
+  dice: "fa-solid fa-dice-d20",
+};
 
 export class PlayerPanel extends HandlebarsApplicationMixin(ApplicationV2) {
   static DEFAULT_OPTIONS = {
@@ -41,20 +47,45 @@ export class PlayerPanel extends HandlebarsApplicationMixin(ApplicationV2) {
 
   async _prepareContext(_options) {
     const actor = this.actor;
-    if (!actor) return { noCharacter: true, bonds: [], used: false };
+    if (!actor) return { noCharacter: true, bonds: [], used: false, sortOptions: [] };
 
     const bonds = getBondsForActor(actor.id);
     const used = isUsed(actor);
 
-    return { noCharacter: false, bonds, used, showFilter: bonds.length > 5 };
+    const sortMode = this._sortMode ?? "created";
+    PlayerPanel.#sortBonds(bonds, sortMode);
+
+    const sortIcon = SORT_ICONS[sortMode];
+    const sortTooltip = game.i18n.localize(`FRIENDSHIP_DICE.Sort.${sortMode}`);
+
+    return { noCharacter: false, bonds, used, showFilter: bonds.length > 5, sortIcon, sortTooltip };
   }
 
   _onRender(_context, _options) {
+    // Sort cycle button
+    const sortBtn = this.element.querySelector(".fd-sort-btn");
+    if (sortBtn) {
+      sortBtn.addEventListener("click", () => {
+        const current = this._sortMode ?? "created";
+        const idx = PLAYER_SORT_MODES.indexOf(current);
+        this._sortMode = PLAYER_SORT_MODES[(idx + 1) % PLAYER_SORT_MODES.length];
+        this.render();
+      });
+    }
+
     const filter = this.element.querySelector(".fd-filter");
     if (!filter) return;
     const cards = this.element.querySelectorAll(".fd-bond-card");
+    const clearBtn = this.element.querySelector(".fd-filter-clear");
 
-    if (this._filterQuery) filter.value = this._filterQuery;
+    if (this._filterQuery) {
+      filter.value = this._filterQuery;
+      if (clearBtn) clearBtn.hidden = false;
+    }
+
+    const syncClear = () => {
+      if (clearBtn) clearBtn.hidden = !filter.value;
+    };
 
     const applyFilter = () => {
       const q = filter.value.toLowerCase().trim();
@@ -65,7 +96,26 @@ export class PlayerPanel extends HandlebarsApplicationMixin(ApplicationV2) {
       });
     };
 
-    filter.addEventListener("input", applyFilter);
+    if (clearBtn) {
+      clearBtn.addEventListener("click", () => {
+        filter.value = "";
+        syncClear();
+        filter.focus();
+        applyFilter();
+      });
+    }
+
+    filter.addEventListener("keydown", (e) => {
+      if (e.key === "Escape" && filter.value) {
+        e.preventDefault();
+        e.stopPropagation();
+        filter.value = "";
+        syncClear();
+        applyFilter();
+      }
+    });
+
+    filter.addEventListener("input", () => { syncClear(); applyFilter(); });
     if (this._filterQuery) applyFilter();
   }
 
@@ -91,6 +141,21 @@ export class PlayerPanel extends HandlebarsApplicationMixin(ApplicationV2) {
 
     emitRefresh();
     this.render();
+  }
+
+  static #sortBonds(bonds, mode) {
+    switch (mode) {
+      case "name":
+        bonds.sort((a, b) => a.partnerName.localeCompare(b.partnerName));
+        break;
+      case "dice":
+        bonds.sort((a, b) => b.expectedValue - a.expectedValue);
+        break;
+      case "created":
+      default:
+        bonds.sort((a, b) => a.createdAt - b.createdAt);
+        break;
+    }
   }
 
   static #instance = null;

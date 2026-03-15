@@ -25,9 +25,14 @@
   "FRIENDSHIP_DICE.GMPanel.ResetDone": "Усі використання кубиків дружби скинуто.",
 
   "FRIENDSHIP_DICE.GMPanel.SearchActor": "Пошук персонажа...",
-  "FRIENDSHIP_DICE.GMPanel.FilterBonds": "Фільтр зв'язків...",
+  "FRIENDSHIP_DICE.GMPanel.FilterBonds": "Пошук...",
   "FRIENDSHIP_DICE.GMPanel.SessionOnly": "В сесії",
   "FRIENDSHIP_DICE.PlayerPanel.FilterBonds": "Фільтр...",
+
+  "FRIENDSHIP_DICE.Sort.created": "За створенням",
+  "FRIENDSHIP_DICE.Sort.name": "За ім'ям",
+  "FRIENDSHIP_DICE.Sort.dice": "За кубиком",
+  "FRIENDSHIP_DICE.Sort.updated": "За зміною",
 
   "FRIENDSHIP_DICE.Chat.Flavor": "{actor} використовує кубик дружби з {partner}!",
 

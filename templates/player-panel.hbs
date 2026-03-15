@@ -20,9 +20,17 @@
     </div>
   {{else if bonds.length}}
     <div class="fd-bonds-section">
-      {{#if showFilter}}
-      <input type="text" class="fd-filter" placeholder="{{localize 'FRIENDSHIP_DICE.PlayerPanel.FilterBonds'}}">
-      {{/if}}
+      <div class="fd-bonds-toolbar">
+        {{#if showFilter}}
+        <div class="fd-filter-wrap">
+          <input type="text" class="fd-filter" placeholder="{{localize 'FRIENDSHIP_DICE.PlayerPanel.FilterBonds'}}">
+          <button type="button" class="fd-filter-clear" hidden><i class="fa-solid fa-xmark"></i></button>
+        </div>
+        {{/if}}
+        <button type="button" class="fd-sort-btn" data-tooltip="{{sortTooltip}}">
+          <i class="{{sortIcon}}"></i>
+        </button>
+      </div>
       <div class="fd-bonds fd-bonds-scroll">
         {{#each bonds}}
         <div class="fd-bond-card{{#if ../used}} fd-used{{/if}}" data-bond-id="{{this.id}}">

@@ -66,12 +66,19 @@
   }
 
   /* ── Filter Input ─────────────────────────── */
+  .fd-gm-panel .fd-filter-wrap,
+  .fd-player-panel .fd-filter-wrap {
+    position: relative;
+    flex: 1;
+    min-width: 0;
+  }
+
   .fd-gm-panel .fd-filter,
   .fd-player-panel .fd-filter {
     width: 100%;
     height: 28px;
     font-size: 0.8rem;
-    padding: 0 8px 0 28px;
+    padding: 0 26px 0 28px;
     border: 1px solid rgba(255, 255, 255, 0.1);
     border-radius: 14px;
     background: rgba(0, 0, 0, 0.15)
@@ -88,17 +95,67 @@
     outline: none;
   }
 
+  .fd-gm-panel .fd-filter-clear,
+  .fd-player-panel .fd-filter-clear {
+    position: absolute;
+    right: 4px;
+    top: 50%;
+    transform: translateY(-50%);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    width: 20px;
+    height: 20px;
+    border: none;
+    border-radius: 50%;
+    background: transparent;
+    color: inherit;
+    opacity: 0.35;
+    font-size: 0.65rem;
+    cursor: pointer;
+    padding: 0;
+    transition: opacity 0.15s, background 0.15s;
+  }
+
+  .fd-gm-panel .fd-filter-clear:hover,
+  .fd-player-panel .fd-filter-clear:hover {
+    opacity: 0.8;
+    background: rgba(255, 255, 255, 0.1);
+  }
+
   /* ── Bonds Toolbar ─────────────────────────── */
   .fd-gm-panel .fd-bonds-toolbar {
     display: flex;
     align-items: center;
-    gap: 0.5rem;
+    gap: 0.4rem;
     margin-bottom: 0.4rem;
   }
 
   .fd-gm-panel .fd-bonds-toolbar .fd-filter {
-    flex: 1;
     margin-bottom: 0;
+  }
+
+  .fd-gm-panel .fd-sort-btn {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    width: 28px;
+    height: 28px;
+    flex-shrink: 0;
+    cursor: pointer;
+    border: 1px solid rgba(255, 255, 255, 0.1);
+    border-radius: 50%;
+    background: rgba(0, 0, 0, 0.15);
+    color: inherit;
+    font-size: 0.75rem;
+    opacity: 0.6;
+    padding: 0;
+    transition: opacity 0.15s, background 0.15s;
+  }
+
+  .fd-gm-panel .fd-sort-btn:hover {
+    opacity: 1;
+    background: rgba(255, 255, 255, 0.08);
   }
 
   .fd-gm-panel .fd-toggle-session {
@@ -107,6 +164,7 @@
     gap: 0.4rem;
     cursor: pointer;
     user-select: none;
+    flex-shrink: 0;
   }
 
   .fd-gm-panel .fd-toggle-track {
@@ -164,11 +222,18 @@
   }
 
   /* ── Bonds Container ─────────────────────── */
-  .fd-gm-panel .fd-bonds,
+  .fd-gm-panel .fd-bonds {
+    display: grid;
+    grid-template-columns: repeat(auto-fill, minmax(260px, 1fr));
+    gap: 0.4rem;
+    align-content: start;
+  }
+
   .fd-player-panel .fd-bonds {
-    display: flex;
-    flex-direction: column;
-    gap: 0.5rem;
+    display: grid;
+    grid-template-columns: repeat(auto-fill, minmax(260px, 1fr));
+    gap: 0.4rem;
+    align-content: start;
   }
 
   .fd-gm-panel .fd-bonds-scroll,
@@ -187,7 +252,7 @@
     background: rgba(255, 255, 255, 0.04);
     border: 1px solid rgba(255, 255, 255, 0.08);
     border-radius: 8px;
-    padding: 0.5rem 0.6rem;
+    padding: 0.4rem 0.5rem;
     transition:
       background 0.15s,
       border-color 0.15s;
@@ -200,7 +265,14 @@
   }
 
   /* ── Names ───────────────────────────────── */
-  .fd-gm-panel .fd-name,
+  .fd-gm-panel .fd-name {
+    font-weight: 600;
+    font-size: 0.85rem;
+    overflow-wrap: break-word;
+    word-break: break-word;
+    min-width: 0;
+  }
+
   .fd-player-panel .fd-name {
     font-weight: 600;
     font-size: 0.85rem;
@@ -402,20 +474,24 @@
   .fd-gm-panel .fd-bond-pair {
     display: flex;
     align-items: center;
-    gap: 0.35rem;
-    margin-bottom: 0.35rem;
+    gap: 0.25rem;
+    margin-bottom: 0.3rem;
   }
 
   .fd-gm-panel .fd-actor {
     display: flex;
     align-items: center;
-    gap: 0.3rem;
-    flex: 1;
+    gap: 0.25rem;
+    flex: 1 1 0;
     min-width: 0;
   }
 
   .fd-gm-panel .fd-actor:last-of-type {
     justify-content: flex-end;
+  }
+
+  .fd-gm-panel .fd-actor .fd-name {
+    font-size: 0.78rem;
   }
 
   .fd-gm-panel .fd-actor-used {
@@ -446,27 +522,21 @@
     color: #fff;
   }
 
-  .fd-gm-panel .fd-heart {
-    color: #e74c3c;
-    font-size: 0.7rem;
-    flex-shrink: 0;
-    padding: 0 2px;
-  }
-
   /* ── Bond Dice Row ───────────────────────── */
   .fd-gm-panel .fd-bond-dice {
     display: flex;
     align-items: center;
-    gap: 0.3rem;
-    padding-top: 0.2rem;
+    gap: 0.25rem;
+    padding-top: 0.25rem;
     border-top: 1px solid rgba(255, 255, 255, 0.05);
+    flex-wrap: wrap;
   }
 
   .fd-gm-panel .fd-bond-dice input[type="number"] {
-    width: 40px;
-    height: 26px;
+    width: 36px;
+    height: 24px;
     text-align: center;
-    font-size: 0.8rem;
+    font-size: 0.75rem;
     border: 1px solid rgba(255, 255, 255, 0.1);
     border-radius: 4px;
     background: rgba(0, 0, 0, 0.15);
@@ -475,14 +545,14 @@
   }
 
   .fd-gm-panel .fd-bond-dice select {
-    width: 54px;
-    height: 26px;
-    font-size: 0.8rem;
+    width: 50px;
+    height: 24px;
+    font-size: 0.75rem;
     border: 1px solid rgba(255, 255, 255, 0.1);
     border-radius: 4px;
     background: rgba(0, 0, 0, 0.15);
     color: inherit;
-    padding: 0 4px;
+    padding: 0 3px;
   }
 
   .fd-gm-panel .fd-bond-dice .fd-formula {
@@ -550,6 +620,41 @@
   /* ═══════════════════════════════════════════
      PLAYER PANEL
      ═══════════════════════════════════════════ */
+
+  .fd-player-panel .fd-bonds-toolbar {
+    display: flex;
+    align-items: center;
+    gap: 0.4rem;
+    margin-bottom: 0.4rem;
+  }
+
+  .fd-player-panel .fd-bonds-toolbar .fd-filter {
+    margin-bottom: 0;
+  }
+
+  .fd-player-panel .fd-sort-btn {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    width: 28px;
+    height: 28px;
+    flex-shrink: 0;
+    cursor: pointer;
+    border: 1px solid rgba(255, 255, 255, 0.1);
+    border-radius: 50%;
+    background: rgba(0, 0, 0, 0.15);
+    color: inherit;
+    font-size: 0.75rem;
+    opacity: 0.6;
+    padding: 0;
+    margin-left: auto;
+    transition: opacity 0.15s, background 0.15s;
+  }
+
+  .fd-player-panel .fd-sort-btn:hover {
+    opacity: 1;
+    background: rgba(255, 255, 255, 0.08);
+  }
 
   .fd-player-panel .fd-bond-card {
     flex-direction: row;

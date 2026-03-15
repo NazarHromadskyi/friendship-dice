@@ -14,6 +14,13 @@ const { ApplicationV2, HandlebarsApplicationMixin } = foundry.applications.api;
 const { DialogV2 } = foundry.applications.api;
 
 const DIE_SIZES = [4, 6, 8, 10, 12, 20];
+const GM_SORT_MODES = ["created", "name", "dice", "updated"];
+const SORT_ICONS = {
+  created: "fa-solid fa-arrow-down-1-9",
+  name: "fa-solid fa-arrow-down-a-z",
+  dice: "fa-solid fa-dice-d20",
+  updated: "fa-solid fa-clock-rotate-left",
+};
 
 export class GMPanel extends HandlebarsApplicationMixin(ApplicationV2) {
   static DEFAULT_OPTIONS = {
@@ -64,9 +71,18 @@ export class GMPanel extends HandlebarsApplicationMixin(ApplicationV2) {
         quantity: bond.quantity,
         size: bond.size,
         formula: `${bond.quantity}d${bond.size}`,
+        expectedValue: bond.quantity * (bond.size + 1) / 2,
+        createdAt: bond.createdAt ?? 0,
+        updatedAt: bond.updatedAt ?? 0,
         sizeOptions: makeSizeOptions(bond.size),
       };
     });
+
+    const sortMode = this._sortMode ?? "created";
+    GMPanel.#sortBonds(enrichedBonds, sortMode);
+
+    const sortIcon = SORT_ICONS[sortMode];
+    const sortTooltip = game.i18n.localize(`FRIENDSHIP_DICE.Sort.${sortMode}`);
 
     const allowedTypes = this._actorTypes ?? new Set(["character"]);
     const actors = game.actors
@@ -83,7 +99,7 @@ export class GMPanel extends HandlebarsApplicationMixin(ApplicationV2) {
         active: allowedTypes.has(t),
       }));
 
-    return { bonds: enrichedBonds, actors, actorTypes, dieSizes: makeSizeOptions(4) };
+    return { bonds: enrichedBonds, actors, actorTypes, dieSizes: makeSizeOptions(4), sortIcon, sortTooltip };
   }
 
   _onRender(_context, _options) {
@@ -153,13 +169,54 @@ export class GMPanel extends HandlebarsApplicationMixin(ApplicationV2) {
       }
     });
 
+    // Sort cycle button
+    const sortBtn = this.element.querySelector(".fd-sort-btn");
+    if (sortBtn) {
+      sortBtn.addEventListener("click", () => {
+        const current = this._sortMode ?? "created";
+        const idx = GM_SORT_MODES.indexOf(current);
+        this._sortMode = GM_SORT_MODES[(idx + 1) % GM_SORT_MODES.length];
+        this.render();
+      });
+    }
+
     // Bond list filter + session toggle
     const bondFilter = this.element.querySelector(".fd-filter");
     const sessionCheck = this.element.querySelector(".fd-session-check");
     const bondCards = this.element.querySelectorAll(".fd-bond-card");
 
-    if (bondFilter && this._filterQuery) bondFilter.value = this._filterQuery;
+    const clearBtn = this.element.querySelector(".fd-filter-clear");
+
+    if (bondFilter && this._filterQuery) {
+      bondFilter.value = this._filterQuery;
+      if (clearBtn) clearBtn.hidden = false;
+    }
     if (sessionCheck && this._sessionOnly) sessionCheck.checked = true;
+
+    const syncClear = () => {
+      if (clearBtn) clearBtn.hidden = !bondFilter?.value;
+    };
+
+    if (clearBtn) {
+      clearBtn.addEventListener("click", () => {
+        bondFilter.value = "";
+        syncClear();
+        bondFilter.focus();
+        applyFilters();
+      });
+    }
+
+    if (bondFilter) {
+      bondFilter.addEventListener("keydown", (e) => {
+        if (e.key === "Escape" && bondFilter.value) {
+          e.preventDefault();
+          e.stopPropagation();
+          bondFilter.value = "";
+          syncClear();
+          applyFilters();
+        }
+      });
+    }
 
     const applyFilters = () => {
       const q = bondFilter?.value.toLowerCase().trim() ?? "";
@@ -189,7 +246,7 @@ export class GMPanel extends HandlebarsApplicationMixin(ApplicationV2) {
       });
     };
 
-    if (bondFilter) bondFilter.addEventListener("input", applyFilters);
+    if (bondFilter) bondFilter.addEventListener("input", () => { syncClear(); applyFilters(); });
     if (sessionCheck) sessionCheck.addEventListener("change", applyFilters);
     if (this._filterQuery || this._sessionOnly) applyFilters();
   }
@@ -271,6 +328,24 @@ export class GMPanel extends HandlebarsApplicationMixin(ApplicationV2) {
   /** @this {GMPanel} */
   static async #onSendRules() {
     await postRulesToChat();
+  }
+
+  static #sortBonds(bonds, mode) {
+    switch (mode) {
+      case "name":
+        bonds.sort((a, b) => a.actor1Name.localeCompare(b.actor1Name) || a.actor2Name.localeCompare(b.actor2Name));
+        break;
+      case "dice":
+        bonds.sort((a, b) => b.expectedValue - a.expectedValue);
+        break;
+      case "updated":
+        bonds.sort((a, b) => b.updatedAt - a.updatedAt);
+        break;
+      case "created":
+      default:
+        bonds.sort((a, b) => a.createdAt - b.createdAt);
+        break;
+    }
   }
 
   static #instance = null;

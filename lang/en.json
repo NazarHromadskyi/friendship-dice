@@ -25,9 +25,14 @@
   "FRIENDSHIP_DICE.GMPanel.ResetDone": "All friendship dice uses have been reset.",
 
   "FRIENDSHIP_DICE.GMPanel.SearchActor": "Search character...",
-  "FRIENDSHIP_DICE.GMPanel.FilterBonds": "Filter bonds...",
+  "FRIENDSHIP_DICE.GMPanel.FilterBonds": "Search...",
   "FRIENDSHIP_DICE.GMPanel.SessionOnly": "In session",
   "FRIENDSHIP_DICE.PlayerPanel.FilterBonds": "Filter...",
+
+  "FRIENDSHIP_DICE.Sort.created": "By creation",
+  "FRIENDSHIP_DICE.Sort.name": "By name",
+  "FRIENDSHIP_DICE.Sort.dice": "By dice",
+  "FRIENDSHIP_DICE.Sort.updated": "By updated",
 
   "FRIENDSHIP_DICE.Chat.Flavor": "{actor} uses friendship die with {partner}!",
 
