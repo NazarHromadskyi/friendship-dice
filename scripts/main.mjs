@@ -1,6 +1,7 @@
 import { PlayerPanel } from "./apps/player-panel.mjs";
 import { GMPanel } from "./apps/gm-panel.mjs";
 import { resetUsed } from "./bond-manager.mjs";
+import { setupRollIntegration } from "./roll-integration.mjs";
 
 const MODULE_ID = "friendship-dice";
 const SOCKET = `module.${MODULE_ID}`;
@@ -43,6 +44,13 @@ Hooks.once("ready", () => {
       emitRefresh();
     });
   }
+
+  // dnd5e roll integration — offer friendship dice on skill/ability/save rolls
+  setupRollIntegration(() => {
+    emitRefresh();
+    PlayerPanel.refreshIfOpen();
+    GMPanel.refreshIfOpen();
+  });
 });
 
 /* ── Scene Control Button ────────────────────────────── */

@@ -41,5 +41,9 @@
   "FRIENDSHIP_DICE.Rules.Usage": "Киньте один з кубиків дружби та додайте результат до будь-якої перевірки.",
   "FRIENDSHIP_DICE.Rules.Nearby": "Ваш друг, має бути поряд не далі ніж 10 футів від вас.",
   "FRIENDSHIP_DICE.Rules.Limit": "Після використання ви не можете використати жодний кубик дружби, допоки не завершите довгий відпочинок.",
-  "FRIENDSHIP_DICE.Rules.SendToChat": "Надіслати в чат"
+  "FRIENDSHIP_DICE.Rules.SendToChat": "Надіслати в чат",
+
+  "FRIENDSHIP_DICE.Dialog.Title": "Кубик Дружби",
+  "FRIENDSHIP_DICE.Dialog.Content": "Використати кубик дружби для цього кидка?",
+  "FRIENDSHIP_DICE.Dialog.Skip": "Пропустити"
 }

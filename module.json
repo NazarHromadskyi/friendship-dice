@@ -1,7 +1,7 @@
 {
   "id": "friendship-dice",
   "title": "Friendship Dice",
-  "description": "Homebrew Friendship Dice mechanic for D&D",
+  "description": "Homebrew Friendship Dice mechanic for D&amp;D",
   "version": "0.1.2",
   "compatibility": {
     "minimum": "13",
@@ -9,16 +9,48 @@
   },
   "authors": [
     {
-      "name": "NazarHromadskyi"
+      "name": "NazarHromadskyi",
+      "flags": {}
     }
   ],
   "manifest": "https://github.com/NazarHromadskyi/friendship-dice/releases/latest/download/module.json",
-  "download": "https://github.com/NazarHromadskyi/friendship-dice/releases/download/v0.1.0/module.zip",
-  "esmodules": ["scripts/main.mjs"],
-  "styles": ["styles/module.css"],
-  "languages": [
-    { "lang": "en", "name": "English", "path": "lang/en.json" },
-    { "lang": "uk", "name": "Ukrainian", "path": "lang/uk.json" }
+  "download": "https://github.com/NazarHromadskyi/friendship-dice/releases/download/v0.1.2/module.zip",
+  "esmodules": [
+    "scripts/main.mjs"
   ],
-  "socket": true
+  "styles": [
+    {
+      "src": "styles/module.css"
+    }
+  ],
+  "languages": [
+    {
+      "lang": "en",
+      "name": "English",
+      "path": "lang/en.json",
+      "flags": {}
+    },
+    {
+      "lang": "uk",
+      "name": "Ukrainian",
+      "path": "lang/uk.json",
+      "flags": {}
+    }
+  ],
+  "relationships": {
+    "recommends": [
+      {
+        "id": "midi-qol",
+        "type": "module",
+        "reason": "Enables automatic friendship die dialog on skill checks, ability checks, saves, and attacks"
+      },
+      {
+        "id": "lib-wrapper",
+        "type": "module",
+        "reason": "Required for roll integration when midi-qol is active"
+      }
+    ]
+  },
+  "socket": true,
+  "flags": {}
 }

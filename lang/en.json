@@ -41,5 +41,9 @@
   "FRIENDSHIP_DICE.Rules.Usage": "Roll one of your friendship dice and add the result to any check.",
   "FRIENDSHIP_DICE.Rules.Nearby": "Your bonded friend must be no more than 10 feet away to use the die.",
   "FRIENDSHIP_DICE.Rules.Limit": "Once used, you can't use any friendship die again until you finish a long rest.",
-  "FRIENDSHIP_DICE.Rules.SendToChat": "Send to chat"
+  "FRIENDSHIP_DICE.Rules.SendToChat": "Send to chat",
+
+  "FRIENDSHIP_DICE.Dialog.Title": "Friendship Die",
+  "FRIENDSHIP_DICE.Dialog.Content": "Use a friendship die for this roll?",
+  "FRIENDSHIP_DICE.Dialog.Skip": "Skip"
 }
