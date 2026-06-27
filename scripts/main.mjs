@@ -1,7 +1,6 @@
 import { PlayerPanel } from "./apps/player-panel.mjs";
 import { GMPanel } from "./apps/gm-panel.mjs";
 import { resetUsed } from "./bond-manager.mjs";
-import { setupRollIntegration } from "./roll-integration.mjs";
 
 const MODULE_ID = "friendship-dice";
 const SOCKET = `module.${MODULE_ID}`;
@@ -17,31 +16,6 @@ Hooks.once("init", () => {
     default: [],
   });
 
-  game.settings.register(MODULE_ID, "schemaVersion", {
-    scope: "world",
-    config: false,
-    type: Number,
-    default: 0,
-  });
-
-  game.settings.register(MODULE_ID, "rollDialog", {
-    name: "FRIENDSHIP_DICE.Settings.RollDialog.Name",
-    hint: "FRIENDSHIP_DICE.Settings.RollDialog.Hint",
-    scope: "client",
-    config: true,
-    type: Boolean,
-    default: true,
-  });
-
-  game.settings.register(MODULE_ID, "rollThreshold", {
-    name: "FRIENDSHIP_DICE.Settings.RollThreshold.Name",
-    hint: "FRIENDSHIP_DICE.Settings.RollThreshold.Hint",
-    scope: "client",
-    config: true,
-    type: Number,
-    default: 0,
-    range: { min: 0, max: 20, step: 1 },
-  });
 });
 
 /* ── Ready ───────────────────────────────────────────── */
@@ -63,13 +37,6 @@ Hooks.once("ready", () => {
       emitRefresh();
     });
   }
-
-  // dnd5e roll integration — offer friendship dice on skill/ability/save rolls
-  setupRollIntegration(() => {
-    emitRefresh();
-    PlayerPanel.refreshIfOpen();
-    GMPanel.refreshIfOpen();
-  });
 });
 
 /* ── Scene Control Button ────────────────────────────── */

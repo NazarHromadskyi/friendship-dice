@@ -2,7 +2,7 @@
   "id": "friendship-dice",
   "title": "Friendship Dice",
   "description": "Homebrew Friendship Dice mechanic for D&amp;D",
-  "version": "1.0.1",
+  "version": "1.1.0",
   "compatibility": {
     "minimum": "13",
     "verified": "13.351"
@@ -14,7 +14,7 @@
     }
   ],
   "manifest": "https://github.com/NazarHromadskyi/friendship-dice/releases/latest/download/module.json",
-  "download": "https://github.com/NazarHromadskyi/friendship-dice/releases/download/v1.0.1/module.zip",
+  "download": "https://github.com/NazarHromadskyi/friendship-dice/releases/download/v1.1.0/module.zip",
   "esmodules": [
     "scripts/main.mjs"
   ],
@@ -37,20 +37,6 @@
       "flags": {}
     }
   ],
-  "relationships": {
-    "recommends": [
-      {
-        "id": "midi-qol",
-        "type": "module",
-        "reason": "Enables automatic friendship die dialog on skill checks, ability checks, saves, and attacks"
-      },
-      {
-        "id": "lib-wrapper",
-        "type": "module",
-        "reason": "Required for roll integration when midi-qol is active"
-      }
-    ]
-  },
   "socket": true,
   "flags": {}
 }
